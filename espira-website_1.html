@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espira.ai — Intelligence with Intention</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --void:        #0E0E0F;
+  --carbon:      #1A1A1C;
+  --raised:      #242426;
+  --border:      #2E2E30;
+  --border-mid:  #444441;
+  --mauve:       #D4537E;
+  --mauve-light: #E8789C;
+  --mauve-deep:  #72243E;
+  --mauve-tint:  rgba(212,83,126,0.10);
+  --text-1:      #F5F4EF;
+  --text-2:      #888780;
+  --text-3:      #5F5E5A;
+  --linen:       #F5F4EF;
+  --font-d:      'Fraunces', Georgia, serif;
+  --font-b:      'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  font-family: var(--font-b);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
+
+/* ── STAIR MARK SVG ── */
+.stair-mark {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(14,14,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+  transition: padding 0.3s;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.logo-type {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: 0.01em;
+}
+.logo-type span { color: var(--mauve); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--text-1); }
+
+.nav-cta {
+  font-family: var(--font-b);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mauve);
+  background: transparent;
+  border: 0.5px solid var(--mauve);
+  border-radius: 8px;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { background: var(--mauve); color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 0;
+  background: var(--carbon);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.25;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 30%, transparent 80%);
+}
+
+.hero-stair-bg {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.04;
+}
+
+.hero-body {
+  position: relative;
+  z-index: 2;
+  padding-top: 160px;
+  padding-bottom: 0;
+  max-width: 780px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mauve);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.1s forwards;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mauve);
+}
+
+.hero h1 {
+  font-family: var(--font-d);
+  font-size: clamp(52px, 8vw, 88px);
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin-bottom: 0;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.2s forwards;
+}
+.hero h1 .dim   { color: var(--border-mid); }
+.hero h1 .accent { color: var(--mauve); font-style: italic; }
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-2);
+  line-height: 1.75;
+  max-width: 500px;
+  margin: 32px 0 48px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.35s forwards;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 64px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.45s forwards;
+}
+
+.btn-primary {
+  font-family: var(--font-b);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--mauve);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover { background: var(--mauve-light); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  font-family: var(--font-b);
+  font-size: 14px;
+  color: var(--text-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+  padding: 0;
+}
+.btn-ghost:hover { color: var(--text-1); }
+.btn-ghost:hover .arrow-icon { transform: translateX(4px); }
+.arrow-icon { transition: transform 0.2s; }
+
+/* stats strip */
+.stats-strip {
+  display: flex;
+  border-top: 0.5px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 0.9s 0.55s forwards;
+}
+.stat {
+  flex: 1;
+  padding: 28px 0 28px;
+  border-right: 0.5px solid var(--border);
+  padding-right: 32px;
+  padding-left: 0;
+}
+.stat + .stat { padding-left: 32px; }
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--font-d);
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.stat-num sup { color: var(--mauve); font-size: 18px; vertical-align: super; }
+.stat-label { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--void);
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  overflow: hidden;
+  padding: 16px 0;
+}
+.marquee-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 22s linear infinite;
+  width: max-content;
+}
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 40px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.marquee-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--mauve);
+  flex-shrink: 0;
+}
+
+/* ── SECTION SHARED ── */
+section { padding: 100px 48px; }
+
+.section-eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mauve);
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: var(--font-d);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.section-title em { font-style: italic; color: var(--mauve); }
+.section-body {
+  font-size: 16px;
+  color: var(--text-2);
+  line-height: 1.75;
+  max-width: 480px;
+}
+
+/* ── SERVICES ── */
+.services { background: var(--void); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 64px;
+}
+
+.service-card {
+  background: var(--carbon);
+  padding: 40px 36px;
+  transition: background 0.25s;
+  cursor: default;
+}
+.service-card:hover { background: var(--raised); }
+
+.service-icon {
+  margin-bottom: 24px;
+}
+
+.service-num {
+  font-family: var(--font-d);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mauve);
+  margin-bottom: 12px;
+  letter-spacing: 0.06em;
+}
+
+.service-name {
+  font-family: var(--font-d);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.2;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+.service-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.service-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border: 0.5px solid var(--border-mid);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+/* ── HOW IT WORKS ── */
+.process { background: var(--carbon); }
+
+.process-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-top: 64px;
+}
+
+.process-steps { display: flex; flex-direction: column; gap: 0; }
+
+.process-step {
+  display: flex;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 0.5px solid var(--border);
+  cursor: default;
+  transition: padding-left 0.25s;
+}
+.process-step:first-child { padding-top: 0; }
+.process-step:last-child { border-bottom: none; }
+.process-step:hover { padding-left: 8px; }
+
+.step-num {
+  font-family: var(--font-d);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mauve);
+  min-width: 28px;
+  padding-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+.step-content {}
+.step-title {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.step-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+.process-visual {
+  position: sticky;
+  top: 120px;
+}
+
+.process-card {
+  background: var(--raised);
+  border: 0.5px solid var(--border-mid);
+  border-radius: 14px;
+  padding: 36px;
+  margin-bottom: 16px;
+}
+.process-card-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mauve);
+  margin-bottom: 16px;
+}
+.process-card-title {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 20px;
+}
+.process-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.process-metric:last-child { border-bottom: none; }
+.process-metric-label { font-size: 13px; color: var(--text-2); }
+.process-metric-val {
+  font-family: var(--font-d);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-1);
+}
+.process-metric-val span { color: var(--mauve); }
+
+/* staircase decorative */
+.stair-deco {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: 16px;
+}
+.stair-bar {
+  background: var(--mauve);
+  border-radius: 2px;
+  height: 8px;
+  transition: opacity 0.3s;
+}
+
+/* ── SOCIAL PROOF ── */
+.proof { background: var(--void); }
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 64px;
+}
+
+.proof-card {
+  background: var(--carbon);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 36px;
+  transition: border-color 0.25s;
+}
+.proof-card:hover { border-color: var(--border-mid); }
+.proof-card.featured {
+  grid-column: span 2;
+  background: var(--raised);
+  border-color: var(--border-mid);
+}
+
+.proof-quote {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-1);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.proof-card.featured .proof-quote { font-size: 26px; }
+
+.proof-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.proof-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--mauve-tint);
+  border: 0.5px solid var(--mauve);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mauve);
+  font-family: var(--font-d);
+  flex-shrink: 0;
+}
+.proof-name { font-size: 14px; font-weight: 500; color: var(--text-1); }
+.proof-role { font-size: 12px; color: var(--text-3); }
+
+.proof-metric-row {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+}
+.proof-metric { }
+.proof-metric-num {
+  font-family: var(--font-d);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--mauve);
+}
+.proof-metric-label { font-size: 12px; color: var(--text-3); }
+
+/* ── USE CASES ── */
+.usecases { background: var(--carbon); }
+
+.usecase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 64px;
+}
+
+.usecase-card {
+  background: var(--void);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  transition: border-color 0.25s, transform 0.2s;
+}
+.usecase-card:hover {
+  border-color: var(--mauve);
+  transform: translateY(-3px);
+}
+
+.usecase-icon-wrap {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--mauve-tint);
+  border: 0.5px solid rgba(212,83,126,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.usecase-title {
+  font-family: var(--font-d);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.usecase-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+/* ── ABOUT / FOUNDER ── */
+.founder { background: var(--void); }
+
+.founder-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.founder-visual {
+  position: relative;
+}
+.founder-frame {
+  background: var(--carbon);
+  border: 0.5px solid var(--border-mid);
+  border-radius: 16px;
+  padding: 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.founder-avatar-large {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: var(--mauve-tint);
+  border: 1.5px solid var(--mauve);
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-d);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--mauve);
+}
+.founder-name-display {
+  font-family: var(--font-d);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 6px;
+}
+.founder-title-display {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 28px;
+}
+.founder-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.founder-badge {
+  font-size: 11px;
+  color: var(--mauve);
+  background: var(--mauve-tint);
+  border: 0.5px solid rgba(212,83,126,0.3);
+  border-radius: 20px;
+  padding: 5px 12px;
+}
+
+.founder-stair-accent {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  opacity: 0.4;
+}
+
+.founder-content {}
+.founder-heading {
+  font-family: var(--font-d);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.founder-heading em { font-style: italic; color: var(--mauve); }
+
+.founder-bio {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.founder-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 32px;
+}
+.credential {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.credential:last-child { border-bottom: none; }
+.credential-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mauve);
+  flex-shrink: 0;
+}
+.credential-text { font-size: 14px; color: var(--text-2); }
+.credential-text strong { color: var(--text-1); font-weight: 500; }
+
+/* ── CTA ── */
+.cta-section {
+  background: var(--carbon);
+  text-align: center;
+  padding: 120px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.2;
+  mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, black 10%, transparent 75%);
+}
+
+.cta-stair {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-heading {
+  font-family: var(--font-d);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+.cta-heading em { font-style: italic; color: var(--mauve); }
+
+.cta-sub {
+  font-size: 17px;
+  color: var(--text-2);
+  margin-bottom: 48px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-large {
+  font-family: var(--font-b);
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--mauve);
+  border: none;
+  border-radius: 10px;
+  padding: 16px 36px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-large:hover { background: var(--mauve-light); transform: translateY(-2px); }
+
+.btn-outline {
+  font-family: var(--font-b);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-2);
+  background: transparent;
+  border: 0.5px solid var(--border-mid);
+  border-radius: 10px;
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--text-2); color: var(--text-1); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--void);
+  border-top: 0.5px solid var(--border);
+  padding: 56px 48px 40px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand {}
+.footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.footer-logo-type {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-1);
+}
+.footer-logo-type span { color: var(--mauve); }
+.footer-tagline {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 240px;
+}
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+.social-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border-mid);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-b);
+}
+.social-btn:hover { border-color: var(--mauve); color: var(--mauve); }
+
+.footer-col {}
+.footer-col-head {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 16px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--text-1); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+}
+.footer-copy { font-size: 12px; color: var(--text-3); }
+.footer-wf { font-size: 12px; color: var(--text-3); }
+.footer-wf span { color: var(--mauve); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 72px 24px; }
+  .hero { padding: 0 24px 0; }
+  .hero-body { padding-top: 120px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .process-layout { grid-template-columns: 1fr; gap: 40px; }
+  .proof-grid { grid-template-columns: 1fr; }
+  .proof-card.featured { grid-column: span 1; }
+  .usecase-grid { grid-template-columns: 1fr; }
+  .founder-layout { grid-template-columns: 1fr; gap: 40px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .stats-strip { flex-wrap: wrap; }
+  .stat { min-width: 45%; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-wrap">
+    <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="14" width="8" height="8" fill="#D4537E"/>
+      <rect x="8" y="8" width="8" height="14" fill="#D4537E"/>
+      <rect x="16" y="2" width="8" height="20" fill="#D4537E"/>
+    </svg>
+    <span class="logo-type">Espira<span>.ai</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's talk</button>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-grid"></div>
+
+  <!-- Large background stairmark -->
+  <div class="hero-stair-bg">
+    <svg width="520" height="520" viewBox="0 0 520 520" fill="none">
+      <rect x="0"   y="346" width="173" height="174" fill="white"/>
+      <rect x="173" y="173" width="174" height="347" fill="white"/>
+      <rect x="347" y="0"   width="173" height="520" fill="white"/>
+    </svg>
+  </div>
+
+  <div class="hero-body">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      AI Automation Agency · South Florida
+    </div>
+
+    <h1>Intelligence<br><span class="accent">with</span> <span class="dim">Intention.</span></h1>
+
+    <p class="hero-sub">We build custom AI workflows that eliminate the manual work keeping your business from scaling. Strategy first. Automation second. Always intentional.</p>
+
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a strategy call</button>
+      <button class="btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">
+        See our services
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="#888780" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-num">40<sup>+</sup></div>
+        <div class="stat-label">Hours saved per<br>client monthly</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3<sup>x</sup></div>
+        <div class="stat-label">Average ROI<br>within 90 days</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100<sup>%</sup></div>
+        <div class="stat-label">Woman-founded<br>& operated</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48<sup>hr</sup></div>
+        <div class="stat-label">From kickoff to<br>first automation live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><div class="marquee-dot"></div>Workflow Automation</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>n8n</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Zapier</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>AI Strategy</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Make.com</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>CRM Automation</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>AI Agents</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Process Design</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>SMB-Focused</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>South Florida</div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item"><div class="marquee-dot"></div>Workflow Automation</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>n8n</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Zapier</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>AI Strategy</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Make.com</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>CRM Automation</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>AI Agents</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Process Design</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>SMB-Focused</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>South Florida</div>
+  </div>
+</div>
+
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="reveal">
+    <div class="section-eyebrow">What we do</div>
+    <div class="section-title">Services built for<br>businesses ready to <em>scale</em></div>
+  </div>
+
+  <div class="services-grid reveal reveal-delay-1">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="4" y="20" width="8" height="8" rx="2" fill="#D4537E" opacity="0.9"/>
+          <rect x="14" y="12" width="8" height="16" rx="2" fill="#D4537E" opacity="0.6"/>
+          <rect x="24" y="4"  width="8" height="24" rx="2" fill="#D4537E" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="service-num">01</div>
+      <div class="service-name">Workflow Automation</div>
+      <div class="service-desc">Map, design, and deploy automated workflows that eliminate repetitive tasks across your entire operation. From lead capture to invoice — fully connected.</div>
+      <div class="service-tags">
+        <span class="service-tag">n8n</span>
+        <span class="service-tag">Zapier</span>
+        <span class="service-tag">Make</span>
+        <span class="service-tag">API integrations</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="10" stroke="#D4537E" stroke-width="1" opacity="0.4"/>
+          <circle cx="16" cy="16" r="5" fill="#D4537E" opacity="0.7"/>
+          <line x1="16" y1="4" x2="16" y2="8" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="16" y1="24" x2="16" y2="28" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="4" y1="16" x2="8" y2="16" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="16" x2="28" y2="16" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="service-num">02</div>
+      <div class="service-name">AI Strategy & Consulting</div>
+      <div class="service-desc">Before building anything, we audit your processes, identify the highest-leverage automation opportunities, and create a roadmap that actually fits your business.</div>
+      <div class="service-tags">
+        <span class="service-tag">Process audit</span>
+        <span class="service-tag">Roadmap</span>
+        <span class="service-tag">ROI analysis</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="4" y="8" width="24" height="4" rx="2" fill="#D4537E" opacity="0.3"/>
+          <rect x="4" y="14" width="18" height="4" rx="2" fill="#D4537E" opacity="0.6"/>
+          <rect x="4" y="20" width="12" height="4" rx="2" fill="#D4537E" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="service-num">03</div>
+      <div class="service-name">AI Agent Builds</div>
+      <div class="service-desc">Custom AI agents that handle customer intake, qualify leads, answer questions, and escalate intelligently — working 24/7 so you don't have to.</div>
+      <div class="service-tags">
+        <span class="service-tag">Chatbots</span>
+        <span class="service-tag">Lead qualification</span>
+        <span class="service-tag">Claude / GPT</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M8 24 L16 8 L24 24" stroke="#D4537E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <circle cx="16" cy="8" r="2.5" fill="#D4537E"/>
+          <circle cx="8" cy="24" r="2.5" fill="#D4537E" opacity="0.5"/>
+          <circle cx="24" cy="24" r="2.5" fill="#D4537E" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="service-num">04</div>
+      <div class="service-name">CRM & Sales Automation</div>
+      <div class="service-desc">Connect your CRM, email, calendar, and communication tools into one seamless pipeline. Stop losing leads to manual follow-up delays.</div>
+      <div class="service-tags">
+        <span class="service-tag">HubSpot</span>
+        <span class="service-tag">Salesforce</span>
+        <span class="service-tag">GoHighLevel</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="6" y="6" width="20" height="20" rx="4" stroke="#D4537E" stroke-width="1" opacity="0.4" fill="none"/>
+          <rect x="10" y="10" width="12" height="12" rx="2" fill="#D4537E" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="service-num">05</div>
+      <div class="service-name">Operations Automation</div>
+      <div class="service-desc">Automate your back office — invoicing, onboarding, reporting, scheduling, and internal communications. Reduce manual overhead by up to 70%.</div>
+      <div class="service-tags">
+        <span class="service-tag">Airtable</span>
+        <span class="service-tag">Notion</span>
+        <span class="service-tag">Google Workspace</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M6 16 Q16 6 26 16 Q16 26 6 16Z" stroke="#D4537E" stroke-width="1" fill="none" opacity="0.4"/>
+          <circle cx="16" cy="16" r="4" fill="#D4537E" opacity="0.8"/>
+        </svg>
+      </div>
+      <div class="service-num">06</div>
+      <div class="service-name">Training & Enablement</div>
+      <div class="service-desc">We don't just build and disappear. Your team gets documentation, recorded walkthroughs, and async support so you stay empowered long after launch.</div>
+      <div class="service-tags">
+        <span class="service-tag">SOPs</span>
+        <span class="service-tag">Workshops</span>
+        <span class="service-tag">Async support</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="reveal">
+    <div class="section-eyebrow">How we work</div>
+    <div class="section-title">From chaos to<br><em>clarity</em> in four steps</div>
+  </div>
+
+  <div class="process-layout">
+    <div class="process-steps reveal reveal-delay-1">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Discovery & audit</div>
+          <div class="step-desc">We map your current workflows, identify the manual bottlenecks costing you time and money, and size the automation opportunity before writing a single line of logic.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Strategy & roadmap</div>
+          <div class="step-desc">You get a prioritized automation roadmap with projected time savings, ROI estimates, and a sequenced build plan — so every decision is grounded in your actual business goals.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Build & test</div>
+          <div class="step-desc">We build, test, and iterate until every workflow runs exactly as designed. You're looped in at every stage — no black boxes, no surprises at launch.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Launch & optimize</div>
+          <div class="step-desc">Go live with confidence. We monitor performance, tune automations based on real data, and document everything so your team is self-sufficient from day one.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-visual reveal reveal-delay-2">
+      <div class="stair-deco">
+        <div class="stair-bar" style="width:80px;"></div>
+        <div class="stair-bar" style="width:120px; opacity:0.7; margin-top:4px;"></div>
+        <div class="stair-bar" style="width:160px; opacity:0.5; margin-top:4px;"></div>
+        <div class="stair-bar" style="width:200px; opacity:0.3; margin-top:4px;"></div>
+      </div>
+
+      <div class="process-card">
+        <div class="process-card-label">Sample results · 90 days</div>
+        <div class="process-card-title">Local service business</div>
+        <div class="process-metric">
+          <span class="process-metric-label">Lead response time</span>
+          <span class="process-metric-val">48hr → <span>4min</span></span>
+        </div>
+        <div class="process-metric">
+          <span class="process-metric-label">Manual admin hours/week</span>
+          <span class="process-metric-val">22hr → <span>3hr</span></span>
+        </div>
+        <div class="process-metric">
+          <span class="process-metric-label">Follow-up conversion rate</span>
+          <span class="process-metric-val">12% → <span>31%</span></span>
+        </div>
+        <div class="process-metric">
+          <span class="process-metric-label">Monthly ROI on automation</span>
+          <span class="process-metric-val"><span>4.2x</span></span>
+        </div>
+      </div>
+
+      <div style="background: var(--raised); border: 0.5px solid var(--border); border-radius: 12px; padding: 20px 24px; display:flex; align-items:center; gap:14px;">
+        <div style="width:36px; height:36px; border-radius:8px; background:var(--mauve-tint); border:0.5px solid rgba(212,83,126,0.3); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h12M8 2v12" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:500; color:var(--text-1); margin-bottom:2px;">Free 30-min strategy call</div>
+          <div style="font-size:12px; color:var(--text-3);">No pitch. Just clarity on where automation can help.</div>
+        </div>
+        <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" style="margin-left:auto; background:var(--mauve); color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:12px; font-weight:500; cursor:pointer; font-family:var(--font-b); white-space:nowrap;">Book now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROOF -->
+<section class="proof" id="work">
+  <div class="reveal">
+    <div class="section-eyebrow">Client results</div>
+    <div class="section-title">What happens when<br>you stop doing it <em>manually</em></div>
+  </div>
+
+  <div class="proof-grid">
+    <div class="proof-card featured reveal reveal-delay-1">
+      <div class="proof-quote">"Espira didn't just build automations — they rethought how our entire client onboarding worked. We went from 3 days to same-day. Our team finally has time to actually grow the business."</div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
+        <div class="proof-author">
+          <div class="proof-avatar">MR</div>
+          <div>
+            <div class="proof-name">Maria R.</div>
+            <div class="proof-role">Founder, boutique marketing agency · Miami</div>
+          </div>
+        </div>
+        <div class="proof-metric-row" style="margin-top:0; padding-top:0; border-top:none;">
+          <div class="proof-metric">
+            <div class="proof-metric-num">3x</div>
+            <div class="proof-metric-label">Faster onboarding</div>
+          </div>
+          <div class="proof-metric">
+            <div class="proof-metric-num">18hr</div>
+            <div class="proof-metric-label">Saved per week</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-card reveal reveal-delay-1">
+      <div class="proof-quote">"I was skeptical that automation would work for a service business. Espira showed me exactly where I was losing money to manual work. The ROI was obvious within weeks."</div>
+      <div class="proof-author" style="margin-top:20px;">
+        <div class="proof-avatar">JT</div>
+        <div>
+          <div class="proof-name">James T.</div>
+          <div class="proof-role">Owner, residential cleaning · Broward County</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-card reveal reveal-delay-2">
+      <div class="proof-quote">"The strategy call alone was worth it. We mapped out six months of automation priorities before spending a dollar on build. That kind of thinking is rare."</div>
+      <div class="proof-author" style="margin-top:20px;">
+        <div class="proof-avatar">SK</div>
+        <div>
+          <div class="proof-name">Sofia K.</div>
+          <div class="proof-role">Co-founder, wellness studio · Fort Lauderdale</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- USE CASES -->
+<section class="usecases" id="usecases">
+  <div class="reveal">
+    <div class="section-eyebrow">Who we help</div>
+    <div class="section-title">Built for the businesses<br>running on <em>hustle</em></div>
+    <p class="section-body" style="margin-top:16px;">If you're manually doing things a workflow could do, we should talk. Here's who gets the most from Espira.</p>
+  </div>
+
+  <div class="usecase-grid">
+    <div class="usecase-card reveal reveal-delay-1">
+      <div class="usecase-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="13" width="5" height="5" rx="1" fill="#D4537E" opacity="0.9"/>
+          <rect x="9" y="8"  width="5" height="10" rx="1" fill="#D4537E" opacity="0.6"/>
+          <rect x="15" y="3" width="5" height="15" rx="1" fill="#D4537E" opacity="0.35"/>
+        </svg>
+      </div>
+      <div class="usecase-title">Marketing agencies</div>
+      <div class="usecase-desc">Automate client reporting, content scheduling, lead handoffs, and campaign tracking. Serve more clients without adding headcount.</div>
+    </div>
+    <div class="usecase-card reveal reveal-delay-1">
+      <div class="usecase-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M4 16 L10 4 L16 16" stroke="#D4537E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="4" r="2" fill="#D4537E"/>
+        </svg>
+      </div>
+      <div class="usecase-title">Service businesses</div>
+      <div class="usecase-desc">Booking, intake, follow-up, invoicing, reviews — all automated. Focus on delivering the service, not managing the admin behind it.</div>
+    </div>
+    <div class="usecase-card reveal reveal-delay-2">
+      <div class="usecase-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="7" width="14" height="10" rx="2" stroke="#D4537E" stroke-width="1" fill="none" opacity="0.6"/>
+          <circle cx="10" cy="12" r="2" fill="#D4537E"/>
+          <path d="M7 7V5a3 3 0 016 0v2" stroke="#D4537E" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="usecase-title">E-commerce & retail</div>
+      <div class="usecase-desc">Order management, customer support triage, inventory alerts, and abandoned cart flows — running 24/7 without lifting a finger.</div>
+    </div>
+    <div class="usecase-card reveal reveal-delay-2">
+      <div class="usecase-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7" stroke="#D4537E" stroke-width="1" fill="none" opacity="0.4"/>
+          <circle cx="10" cy="10" r="3" fill="#D4537E" opacity="0.8"/>
+        </svg>
+      </div>
+      <div class="usecase-title">Real estate & proptech</div>
+      <div class="usecase-desc">Lead routing, showing coordination, document workflows, and nurture sequences — all the repetitive touchpoints, automated with precision.</div>
+    </div>
+    <div class="usecase-card reveal reveal-delay-3">
+      <div class="usecase-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14 Q10 6 17 14" stroke="#D4537E" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <circle cx="3" cy="14" r="2" fill="#D4537E" opacity="0.5"/>
+          <circle cx="17" cy="14" r="2" fill="#D4537E" opacity="0.5"/>
+          <circle cx="10" cy="8" r="2.5" fill="#D4537E"/>
+        </svg>
+      </div>
+      <div class="usecase-title">Coaches & consultants</div>
+      <div class="usecase-desc">Automated scheduling, client onboarding sequences, payment reminders, and content distribution — so you can focus on the work that only you can do.</div>
+    </div>
+    <div class="usecase-card reveal reveal-delay-3">
+      <div class="usecase-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="3" width="6" height="6" rx="1.5" fill="#D4537E" opacity="0.8"/>
+          <rect x="11" y="3" width="6" height="6" rx="1.5" fill="#D4537E" opacity="0.5"/>
+          <rect x="3" y="11" width="6" height="6" rx="1.5" fill="#D4537E" opacity="0.5"/>
+          <rect x="11" y="11" width="6" height="6" rx="1.5" fill="#D4537E" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="usecase-title">Health & wellness</div>
+      <div class="usecase-desc">Patient or client intake, appointment reminders, follow-up care sequences, and staff scheduling — HIPAA-aware and built for your tools.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOUNDER / ABOUT -->
+<section class="founder" id="about">
+  <div class="reveal">
+    <div class="section-eyebrow">Who's behind Espira</div>
+  </div>
+
+  <div class="founder-layout">
+    <div class="founder-visual reveal reveal-delay-1">
+      <div class="founder-frame">
+        <div class="founder-avatar-large">C</div>
+        <div class="founder-name-display">Carolyne Mesa</div>
+        <div class="founder-title-display">Founder & Principal Consultant</div>
+        <div class="founder-badge-row">
+          <span class="founder-badge">AI Strategy</span>
+          <span class="founder-badge">Enterprise Architecture</span>
+          <span class="founder-badge">Fulbright Scholar</span>
+          <span class="founder-badge">South Florida</span>
+        </div>
+        <div class="founder-stair-accent">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <rect x="0"  y="53" width="27" height="27" fill="#D4537E" opacity="0.15"/>
+            <rect x="27" y="27" width="26" height="53" fill="#D4537E" opacity="0.1"/>
+            <rect x="53" y="0"  width="27" height="80" fill="#D4537E" opacity="0.07"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="founder-content reveal reveal-delay-2">
+      <div class="founder-heading">Strategy-led.<br>Technically fluent.<br><em>Genuinely invested.</em></div>
+      <p class="founder-bio">I built Espira because I kept seeing the same problem: small businesses drowning in manual work while enterprise-grade automation was priced out of reach.</p>
+      <p class="founder-bio">With a background spanning Gartner research, enterprise architecture, and Fulbright-awarded academic work, I bring a level of strategic rigor to automation that most boutique agencies don't.</p>
+      <p class="founder-bio">Being a woman founder in the AI space isn't incidental — it's a deliberate choice to build something different. More intentional. More human. More yours.</p>
+
+      <div class="founder-credentials">
+        <div class="credential">
+          <div class="credential-dot"></div>
+          <div class="credential-text"><strong>Former Gartner</strong> — enterprise research & advisory</div>
+        </div>
+        <div class="credential">
+          <div class="credential-dot"></div>
+          <div class="credential-text"><strong>Fulbright Scholar</strong> — international academic distinction</div>
+        </div>
+        <div class="credential">
+          <div class="credential-dot"></div>
+          <div class="credential-text"><strong>Senior Consultant</strong> — active enterprise architecture engagements</div>
+        </div>
+        <div class="credential">
+          <div class="credential-dot"></div>
+          <div class="credential-text"><strong>Speaker</strong> — eMerge Americas, GAIL (Global AI Leadership)</div>
+        </div>
+        <div class="credential">
+          <div class="credential-dot"></div>
+          <div class="credential-text"><strong>Based in South Florida</strong> — Fort Lauderdale / Miami area</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-stair">
+    <svg width="60" height="48" viewBox="0 0 60 48" fill="none">
+      <rect x="0"  y="30" width="20" height="18" rx="2" fill="#D4537E" opacity="0.9"/>
+      <rect x="20" y="16" width="20" height="32" rx="2" fill="#D4537E" opacity="0.6"/>
+      <rect x="40" y="2"  width="20" height="46" rx="2" fill="#D4537E" opacity="0.35"/>
+    </svg>
+  </div>
+
+  <div class="cta-heading reveal">Ready to stop doing it <em>manually?</em></div>
+  <p class="cta-sub reveal reveal-delay-1">Book a free 30-minute strategy call. No pitch, no pressure — just an honest look at where automation can move the needle for your business.</p>
+  <div class="cta-actions reveal reveal-delay-2">
+    <button class="btn-large">Book your free strategy call</button>
+    <button class="btn-outline">View our services</button>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <svg width="22" height="18" viewBox="0 0 22 18" fill="none">
+          <rect x="0" y="11" width="7" height="7" fill="#D4537E"/>
+          <rect x="7" y="6" width="7" height="12" fill="#D4537E" opacity="0.7"/>
+          <rect x="14" y="1" width="8" height="17" fill="#D4537E" opacity="0.4"/>
+        </svg>
+        <span class="footer-logo-type">Espira<span>.ai</span></span>
+      </div>
+      <p class="footer-tagline">Intelligence with Intention. AI automation for businesses ready to scale.</p>
+      <div class="footer-socials">
+        <button class="social-btn">in</button>
+        <button class="social-btn">tw</button>
+        <button class="social-btn">ig</button>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Services</div>
+      <div class="footer-links">
+        <a href="#">Workflow automation</a>
+        <a href="#">AI strategy</a>
+        <a href="#">AI agent builds</a>
+        <a href="#">CRM automation</a>
+        <a href="#">Training & enablement</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Work</a>
+        <a href="#">Speaking</a>
+        <a href="#">Blog</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Connect</div>
+      <div class="footer-links">
+        <a href="#">Book a call</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">hello@espira.ai</a>
+        <a href="#">Fort Lauderdale, FL</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Espira, LLC · All rights reserved</div>
+    <div class="footer-wf">Built with <span>intention</span> · South Florida</div>
+  </div>
+</footer>
+
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
