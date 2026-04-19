@@ -191,10 +191,26 @@ nav {
   backdrop-filter: blur(14px); min-width: 196px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
+
+/* ── AGENT ICON ANIMATIONS ── */
 .ac-icon {
   width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center; font-size: 13px;
+  animation: iconGlow 3s ease-in-out infinite;
 }
+.ac-icon .ac-emoji {
+  display: inline-block;
+  animation: iconBounce 2.5s ease-in-out infinite;
+}
+.card-1 .ac-icon { animation-delay: 0s; }
+.card-1 .ac-emoji { animation-delay: 0s; }
+.card-2 .ac-icon { animation-delay: 0.7s; }
+.card-2 .ac-emoji { animation-delay: 0.7s; }
+.card-3 .ac-icon { animation-delay: 1.4s; }
+.card-3 .ac-emoji { animation-delay: 1.4s; }
+.card-4 .ac-icon { animation-delay: 2.1s; }
+.card-4 .ac-emoji { animation-delay: 2.1s; }
+
 .ac-label { font-size: 10px; color: var(--text-3); font-weight: 500; margin-bottom: 3px; line-height: 1; }
 .ac-value { font-size: 13px; color: var(--text-1); font-weight: 600; line-height: 1; }
 .ac-dot {
@@ -214,39 +230,6 @@ nav {
 .hero-desc   { animation-delay: 0.2s; }
 .cta-row     { animation-delay: 0.3s; }
 .stats       { animation-delay: 0.4s; }
-
-/* ── MARQUEE ── */
-.marquee-wrap {
-  background: var(--void);
-  border-top: 0.5px solid var(--border);
-  border-bottom: 0.5px solid var(--border);
-  overflow: hidden;
-  padding: 16px 0;
-}
-.marquee-track {
-  display: flex;
-  gap: 0;
-  animation: marquee 22s linear infinite;
-  width: max-content;
-}
-.marquee-item {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 0 40px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  white-space: nowrap;
-}
-.marquee-dot {
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--mauve);
-  flex-shrink: 0;
-}
 
 /* ── SECTION SHARED ── */
 section { padding: 100px 48px; }
@@ -769,10 +752,6 @@ footer {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 @keyframes heroFadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -796,6 +775,15 @@ footer {
 @keyframes dotPulse {
   0%,100% { opacity: 1; }
   50%     { opacity: 0.3; }
+}
+@keyframes iconBounce {
+  0%, 55%, 100% { transform: translateY(0) scale(1); }
+  30%           { transform: translateY(-4px) scale(1.18); }
+  45%           { transform: translateY(-2px) scale(1.08); }
+}
+@keyframes iconGlow {
+  0%,100% { box-shadow: none; }
+  50%     { box-shadow: 0 0 12px rgba(212,83,126,0.25); }
 }
 
 .reveal {
@@ -881,7 +869,9 @@ footer {
     <div class="glow-ring-3"></div>
 
     <div class="agent-card card-1">
-      <div class="ac-icon" style="background:rgba(76,173,138,0.12);">🤖</div>
+      <div class="ac-icon" style="background:rgba(76,173,138,0.12);">
+        <span class="ac-emoji">🤖</span>
+      </div>
       <div>
         <div class="ac-label">Customer Service Agent</div>
         <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
@@ -891,7 +881,9 @@ footer {
     </div>
 
     <div class="agent-card card-2">
-      <div class="ac-icon" style="background:rgba(212,83,126,0.12);">⚡</div>
+      <div class="ac-icon" style="background:rgba(212,83,126,0.12);">
+        <span class="ac-emoji">⚡</span>
+      </div>
       <div>
         <div class="ac-label">Lead Generation Agent</div>
         <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
@@ -901,7 +893,9 @@ footer {
     </div>
 
     <div class="agent-card card-3">
-      <div class="ac-icon" style="background:rgba(232,168,74,0.12);">📄</div>
+      <div class="ac-icon" style="background:rgba(232,168,74,0.12);">
+        <span class="ac-emoji">📄</span>
+      </div>
       <div>
         <div class="ac-label">Invoice Agent</div>
         <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
@@ -911,7 +905,9 @@ footer {
     </div>
 
     <div class="agent-card card-4">
-      <div class="ac-icon" style="background:rgba(106,168,212,0.12);">📅</div>
+      <div class="ac-icon" style="background:rgba(106,168,212,0.12);">
+        <span class="ac-emoji">📅</span>
+      </div>
       <div>
         <div class="ac-label">Scheduling Automation</div>
         <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
@@ -922,27 +918,6 @@ footer {
   </div>
 
 </section>
-
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item"><span class="marquee-dot"></span>Workflow Automation</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>AI Strategy</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>CRM Integration</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>AI Agent Builds</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Operations Automation</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Training &amp; Enablement</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>South Florida</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Workflow Automation</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>AI Strategy</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>CRM Integration</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>AI Agent Builds</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Operations Automation</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Training &amp; Enablement</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>South Florida</div>
-  </div>
-</div>
 
 
 <!-- SERVICES -->
