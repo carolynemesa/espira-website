@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Espira.ai — Intelligence with Intention</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,8 +21,11 @@
   --text-1:      #F5F4EF;
   --text-2:      #888780;
   --text-3:      #5F5E5A;
-  --linen:       #F5F4EF;
+  --success:     #4cad8a;
+  --warning:     #e8a84a;
+  --info:        #6aa8d4;
   --font-d:      'Fraunces', Georgia, serif;
+  --font-cg:     'Cormorant Garamond', Georgia, serif;
   --font-b:      'DM Sans', sans-serif;
 }
 
@@ -41,12 +44,6 @@ body {
 ::-webkit-scrollbar-track { background: var(--void); }
 ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
 
-/* ── STAIR MARK SVG ── */
-.stair-mark {
-  display: inline-block;
-  vertical-align: middle;
-}
-
 /* ── NAV ── */
 nav {
   position: fixed;
@@ -55,8 +52,8 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 48px;
-  background: rgba(14,14,15,0.85);
+  padding: 20px 64px;
+  background: rgba(26,26,28,0.88);
   backdrop-filter: blur(12px);
   border-bottom: 0.5px solid var(--border);
   transition: padding 0.3s;
@@ -65,15 +62,15 @@ nav {
 .logo-wrap {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
 }
 .logo-type {
-  font-family: var(--font-d);
-  font-size: 20px;
-  font-weight: 500;
+  font-family: var(--font-cg);
+  font-size: 22px;
+  font-weight: 600;
   color: var(--text-1);
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 .logo-type span { color: var(--mauve); }
 
@@ -83,7 +80,7 @@ nav {
   list-style: none;
 }
 .nav-links a {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-2);
   text-decoration: none;
@@ -94,169 +91,129 @@ nav {
 
 .nav-cta {
   font-family: var(--font-b);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--mauve);
-  background: transparent;
-  border: 0.5px solid var(--mauve);
-  border-radius: 8px;
-  padding: 9px 20px;
+  color: #fdf0f3;
+  background: var(--mauve);
+  border: none;
+  border-radius: 9999px;
+  padding: 11px 24px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 180ms ease, transform 100ms ease;
   letter-spacing: 0.01em;
 }
-.nav-cta:hover { background: var(--mauve); color: #fff; }
+.nav-cta:hover { background: var(--mauve-light); }
+.nav-cta:active { transform: scale(0.98); }
 
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 48px 0;
-  background: var(--carbon);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 130px 64px 80px;
+  gap: 64px;
   position: relative;
   overflow: hidden;
+  background: var(--carbon);
 }
 
-.hero-bg-grid {
-  position: absolute;
-  inset: 0;
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
   background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.25;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 30%, transparent 80%);
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
 }
 
-.hero-stair-bg {
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.04;
-}
-
-.hero-body {
-  position: relative;
-  z-index: 2;
-  padding-top: 160px;
-  padding-bottom: 0;
-  max-width: 780px;
-}
+/* LEFT COLUMN */
+.hero-left { position: relative; z-index: 2; }
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mauve);
-  margin-bottom: 32px;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.1s forwards;
-}
-.eyebrow-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--mauve);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--mauve); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
 }
 
 .hero h1 {
-  font-family: var(--font-d);
-  font-size: clamp(52px, 8vw, 88px);
-  font-weight: 500;
-  color: var(--text-1);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-  margin-bottom: 0;
-  opacity: 0;
-  animation: fadeUp 0.9s 0.2s forwards;
+  font-family: var(--font-cg);
+  font-size: clamp(48px, 4.8vw, 78px);
+  font-weight: 700; line-height: 1.2; letter-spacing: -0.025em;
+  color: var(--text-1); margin-bottom: 40px;
 }
-.hero h1 .dim   { color: var(--border-mid); }
-.hero h1 .accent { color: var(--mauve); font-style: italic; }
+.hero h1 em { font-style: italic; font-weight: 300; color: var(--mauve); display: inline; }
 
-.hero-sub {
-  font-size: 17px;
-  color: var(--text-2);
-  line-height: 1.75;
-  max-width: 500px;
-  margin: 32px 0 48px;
-  opacity: 0;
-  animation: fadeUp 0.9s 0.35s forwards;
+.hero-desc {
+  font-size: 17px; color: var(--text-2); line-height: 1.75;
+  max-width: 420px; margin-bottom: 40px; font-weight: 400;
 }
 
-.hero-actions {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 64px;
-  opacity: 0;
-  animation: fadeUp 0.9s 0.45s forwards;
-}
+.cta-row { display: flex; gap: 14px; align-items: center; }
 
 .btn-primary {
-  font-family: var(--font-b);
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-  background: var(--mauve);
-  border: none;
-  border-radius: 8px;
-  padding: 14px 28px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-  letter-spacing: 0.01em;
+  background: var(--mauve); color: #fdf0f3; border: none; border-radius: 9999px;
+  padding: 14px 30px; font-family: var(--font-b); font-size: 15px; font-weight: 500;
+  cursor: pointer; transition: background 180ms ease, transform 100ms ease;
+  white-space: nowrap;
 }
-.btn-primary:hover { background: var(--mauve-light); transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:hover { background: var(--mauve-light); }
+.btn-primary:active { transform: scale(0.98); }
 
-.btn-ghost {
-  font-family: var(--font-b);
-  font-size: 14px;
-  color: var(--text-2);
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.2s;
-  padding: 0;
+/* Stats strip */
+.stats {
+  display: flex; gap: 40px; margin-top: 56px; padding-top: 40px;
+  border-top: 1px solid var(--border);
 }
-.btn-ghost:hover { color: var(--text-1); }
-.btn-ghost:hover .arrow-icon { transform: translateX(4px); }
-.arrow-icon { transition: transform 0.2s; }
+.stat-val {
+  font-family: var(--font-cg); font-size: 38px; font-weight: 600;
+  color: var(--mauve); line-height: 1;
+}
+.stat-label { font-size: 13px; color: var(--text-2); margin-top: 6px; line-height: 1.4; }
 
-/* stats strip */
-.stats-strip {
-  display: flex;
-  border-top: 0.5px solid var(--border);
-  opacity: 0;
-  animation: fadeUp 0.9s 0.55s forwards;
+/* RIGHT COLUMN */
+.hero-right {
+  position: relative; display: flex; align-items: center;
+  justify-content: center; height: 520px; z-index: 2;
 }
-.stat {
-  flex: 1;
-  padding: 28px 0 28px;
-  border-right: 0.5px solid var(--border);
-  padding-right: 32px;
-  padding-left: 0;
+
+.glow-ring-3 {
+  position: absolute; width: 460px; height: 460px; border-radius: 50%;
+  border: 1px solid rgba(212,83,126,0.09);
+  animation: glowPulse 6s ease-in-out infinite; z-index: 1;
 }
-.stat + .stat { padding-left: 32px; }
-.stat:last-child { border-right: none; }
-.stat-num {
-  font-family: var(--font-d);
-  font-size: 36px;
-  font-weight: 500;
-  color: var(--text-1);
-  margin-bottom: 4px;
-  line-height: 1;
+
+.agent-card {
+  position: absolute; background: rgba(26,26,28,0.92);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+  padding: 12px 16px; display: flex; align-items: center; gap: 11px;
+  backdrop-filter: blur(14px); min-width: 196px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
-.stat-num sup { color: var(--mauve); font-size: 18px; vertical-align: super; }
-.stat-label { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+.ac-icon {
+  width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+}
+.ac-label { font-size: 10px; color: var(--text-3); font-weight: 500; margin-bottom: 3px; line-height: 1; }
+.ac-value { font-size: 13px; color: var(--text-1); font-weight: 600; line-height: 1; }
+.ac-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.card-1 { top: 6%;  left: -8%; animation: floatDown 5.5s ease-in-out infinite, fadeInCard 0.7s ease 0.1s both; }
+.card-2 { top: 38%; right: -6%; animation: floatUp 6s ease-in-out infinite, fadeInCard 0.7s ease 0.4s both; }
+.card-3 { bottom: 20%; left: -6%; animation: floatDown 7s ease-in-out infinite, fadeInCard 0.7s ease 0.7s both; }
+.card-4 { bottom: 5%; right: -4%; animation: floatUp 5s ease-in-out infinite, fadeInCard 0.7s ease 1s both; }
+
+/* Hero entrance animations */
+.hero-left > * { animation: heroFadeIn 0.8s ease both; }
+.eyebrow     { animation-delay: 0.0s; }
+.hero h1     { animation-delay: 0.1s; }
+.hero-desc   { animation-delay: 0.2s; }
+.cta-row     { animation-delay: 0.3s; }
+.stats       { animation-delay: 0.4s; }
 
 /* ── MARQUEE ── */
 .marquee-wrap {
@@ -341,9 +298,7 @@ section { padding: 100px 48px; }
 }
 .service-card:hover { background: var(--raised); }
 
-.service-icon {
-  margin-bottom: 24px;
-}
+.service-icon { margin-bottom: 24px; }
 
 .service-num {
   font-family: var(--font-d);
@@ -371,11 +326,7 @@ section { padding: 100px 48px; }
   margin-bottom: 24px;
 }
 
-.service-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
+.service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .service-tag {
   font-size: 10px;
   font-weight: 500;
@@ -422,7 +373,6 @@ section { padding: 100px 48px; }
   letter-spacing: 0.04em;
 }
 
-.step-content {}
 .step-title {
   font-family: var(--font-d);
   font-size: 20px;
@@ -433,10 +383,7 @@ section { padding: 100px 48px; }
 }
 .step-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
 
-.process-visual {
-  position: sticky;
-  top: 120px;
-}
+.process-visual { position: sticky; top: 120px; }
 
 .process-card {
   background: var(--raised);
@@ -477,7 +424,6 @@ section { padding: 100px 48px; }
 }
 .process-metric-val span { color: var(--mauve); }
 
-/* staircase decorative */
 .stair-deco {
   display: flex;
   flex-direction: column;
@@ -527,11 +473,7 @@ section { padding: 100px 48px; }
 }
 .proof-card.featured .proof-quote { font-size: 26px; }
 
-.proof-author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.proof-author { display: flex; align-items: center; gap: 12px; }
 .proof-avatar {
   width: 36px; height: 36px;
   border-radius: 50%;
@@ -556,7 +498,6 @@ section { padding: 100px 48px; }
   padding-top: 24px;
   border-top: 0.5px solid var(--border);
 }
-.proof-metric { }
 .proof-metric-num {
   font-family: var(--font-d);
   font-size: 28px;
@@ -619,9 +560,7 @@ section { padding: 100px 48px; }
   margin-top: 64px;
 }
 
-.founder-visual {
-  position: relative;
-}
+.founder-visual { position: relative; }
 .founder-frame {
   background: var(--carbon);
   border: 0.5px solid var(--border-mid);
@@ -652,17 +591,8 @@ section { padding: 100px 48px; }
   color: var(--text-1);
   margin-bottom: 6px;
 }
-.founder-title-display {
-  font-size: 13px;
-  color: var(--text-2);
-  margin-bottom: 28px;
-}
-.founder-badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
+.founder-title-display { font-size: 13px; color: var(--text-2); margin-bottom: 28px; }
+.founder-badge-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .founder-badge {
   font-size: 11px;
   color: var(--mauve);
@@ -672,14 +602,8 @@ section { padding: 100px 48px; }
   padding: 5px 12px;
 }
 
-.founder-stair-accent {
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  opacity: 0.4;
-}
+.founder-stair-accent { position: absolute; bottom: -1px; right: -1px; opacity: 0.4; }
 
-.founder-content {}
 .founder-heading {
   font-family: var(--font-d);
   font-size: clamp(28px, 3vw, 40px);
@@ -691,19 +615,9 @@ section { padding: 100px 48px; }
 }
 .founder-heading em { font-style: italic; color: var(--mauve); }
 
-.founder-bio {
-  font-size: 15px;
-  color: var(--text-2);
-  line-height: 1.8;
-  margin-bottom: 16px;
-}
+.founder-bio { font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 16px; }
 
-.founder-credentials {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: 32px;
-}
+.founder-credentials { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
 .credential {
   display: flex;
   align-items: center;
@@ -712,12 +626,7 @@ section { padding: 100px 48px; }
   border-bottom: 0.5px solid var(--border);
 }
 .credential:last-child { border-bottom: none; }
-.credential-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--mauve);
-  flex-shrink: 0;
-}
+.credential-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mauve); flex-shrink: 0; }
 .credential-text { font-size: 14px; color: var(--text-2); }
 .credential-text strong { color: var(--text-1); font-weight: 500; }
 
@@ -732,8 +641,7 @@ section { padding: 100px 48px; }
 
 .cta-section::before {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image:
     linear-gradient(var(--border) 1px, transparent 1px),
     linear-gradient(90deg, var(--border) 1px, transparent 1px);
@@ -742,13 +650,7 @@ section { padding: 100px 48px; }
   mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, black 10%, transparent 75%);
 }
 
-.cta-stair {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
-  position: relative;
-  z-index: 2;
-}
+.cta-stair { display: flex; justify-content: center; margin-bottom: 40px; position: relative; z-index: 2; }
 
 .cta-heading {
   font-family: var(--font-d);
@@ -758,8 +660,7 @@ section { padding: 100px 48px; }
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
 }
 .cta-heading em { font-style: italic; color: var(--mauve); }
 
@@ -768,11 +669,9 @@ section { padding: 100px 48px; }
   color: var(--text-2);
   margin-bottom: 48px;
   max-width: 440px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: auto; margin-right: auto;
   line-height: 1.7;
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
 }
 
 .cta-actions {
@@ -780,8 +679,7 @@ section { padding: 100px 48px; }
   justify-content: center;
   align-items: center;
   gap: 20px;
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
 }
 
 .btn-large {
@@ -826,72 +724,41 @@ footer {
   margin-bottom: 48px;
 }
 
-.footer-brand {}
-.footer-logo-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
+.footer-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
 .footer-logo-type {
-  font-family: var(--font-d);
+  font-family: var(--font-cg);
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-1);
 }
 .footer-logo-type span { color: var(--mauve); }
-.footer-tagline {
-  font-size: 13px;
-  color: var(--text-3);
-  line-height: 1.6;
-  margin-bottom: 24px;
-  max-width: 240px;
-}
-.footer-socials {
-  display: flex;
-  gap: 12px;
-}
+.footer-tagline { font-size: 13px; color: var(--text-3); line-height: 1.6; margin-bottom: 24px; max-width: 240px; }
+.footer-socials { display: flex; gap: 12px; }
 .social-btn {
   width: 34px; height: 34px;
   border-radius: 8px;
   border: 0.5px solid var(--border-mid);
   background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
   color: var(--text-3);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 12px; font-weight: 500;
   font-family: var(--font-b);
 }
 .social-btn:hover { border-color: var(--mauve); color: var(--mauve); }
 
-.footer-col {}
 .footer-col-head {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 16px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 16px;
 }
 .footer-links { display: flex; flex-direction: column; gap: 10px; }
-.footer-links a {
-  font-size: 13px;
-  color: var(--text-2);
-  text-decoration: none;
-  transition: color 0.2s;
-}
+.footer-links a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--text-1); }
 
 .footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 24px;
-  border-top: 0.5px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 24px; border-top: 0.5px solid var(--border);
 }
 .footer-copy { font-size: 12px; color: var(--text-3); }
 .footer-wf { font-size: 12px; color: var(--text-3); }
@@ -906,16 +773,37 @@ footer {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes glowPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.6; transform: scale(1.04); }
+}
+@keyframes floatUp {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-9px); }
+}
+@keyframes floatDown {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(9px); }
+}
+@keyframes dotPulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.3; }
+}
 
 .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
@@ -925,8 +813,8 @@ footer {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
   section { padding: 72px 24px; }
-  .hero { padding: 0 24px 0; }
-  .hero-body { padding-top: 120px; }
+  .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
+  .hero-right { height: 360px; }
   .services-grid { grid-template-columns: 1fr; }
   .process-layout { grid-template-columns: 1fr; gap: 40px; }
   .proof-grid { grid-template-columns: 1fr; }
@@ -934,8 +822,7 @@ footer {
   .usecase-grid { grid-template-columns: 1fr; }
   .founder-layout { grid-template-columns: 1fr; gap: 40px; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .stats-strip { flex-wrap: wrap; }
-  .stat { min-width: 45%; }
+  .stats { flex-wrap: wrap; }
 }
 </style>
 </head>
@@ -944,10 +831,11 @@ footer {
 <!-- NAV -->
 <nav>
   <a href="#" class="logo-wrap">
-    <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="14" width="8" height="8" fill="#D4537E"/>
-      <rect x="8" y="8" width="8" height="14" fill="#D4537E"/>
-      <rect x="16" y="2" width="8" height="20" fill="#D4537E"/>
+    <svg width="24" height="24" viewBox="0 0 120 120" fill="none">
+      <line x1="18" y1="102" x2="96" y2="24" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+      <circle cx="18" cy="102" r="7"  fill="#72243E"/>
+      <circle cx="57" cy="63"  r="13" fill="#BF5878"/>
+      <circle cx="96" cy="24"  r="23" fill="#D4537E"/>
     </svg>
     <span class="logo-type">Espira<span>.ai</span></span>
   </a>
@@ -957,59 +845,104 @@ footer {
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <button class="nav-cta" data-tally-open="QKYZYA" data-tally-layout="modal" data-tally-emoji-text="👋" data-tally-emoji-animation="wave">Let's talk</button>
+  <button class="nav-cta" data-tally-open="QKYZYA" data-tally-layout="modal" data-tally-emoji-text="👋" data-tally-emoji-animation="wave">Book a free call</button>
 </nav>
 
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="hero-bg-grid"></div>
 
-  <!-- Large background stairmark -->
-  <div class="hero-stair-bg">
-    <svg width="520" height="520" viewBox="0 0 520 520" fill="none">
-      <rect x="0"   y="346" width="173" height="174" fill="white"/>
-      <rect x="173" y="173" width="174" height="347" fill="white"/>
-      <rect x="347" y="0"   width="173" height="520" fill="white"/>
-    </svg>
-  </div>
-
-  <div class="hero-body">
-    <div class="eyebrow">
-      <div class="eyebrow-dot"></div>
-      AI Automation Agency · South Florida
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="eyebrow">AI Automation Agency · South Florida</div>
+    <h1>Stop doing it <em>manually.</em></h1>
+    <p class="hero-desc">We identify the work slowing your business down and build AI automations that eliminate it — strategy first, always intentional.</p>
+    <div class="cta-row">
+      <button class="btn-primary" data-tally-open="QKYZYA" data-tally-layout="modal" data-tally-emoji-text="👋" data-tally-emoji-animation="wave">Book a free call</button>
     </div>
-
-    <h1>Intelligence<br><span class="accent">with</span> <span class="dim">Intention.</span></h1>
-
-    <p class="hero-sub">We build custom AI workflows that eliminate the manual work keeping your business from scaling. Strategy first. Automation second. Always intentional.</p>
-
-    <div class="hero-actions">
-      <button class="btn-primary" data-tally-open="QKYZYA" data-tally-layout="modal" data-tally-emoji-text="👋" data-tally-emoji-animation="wave">Book a strategy call</button>
-      <button class="btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">
-        See our services
-        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="#888780" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="stats-strip">
-      <div class="stat">
-        <div class="stat-num">40<sup>+</sup></div>
-        <div class="stat-label">Hours saved per<br>client monthly</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">3<sup>x</sup></div>
+    <div class="stats">
+      <div>
+        <div class="stat-val">3x</div>
         <div class="stat-label">Average ROI<br>within 90 days</div>
       </div>
-      <div class="stat">
-        <div class="stat-num">100<sup>%</sup></div>
-        <div class="stat-label">Woman-founded<br>& operated</div>
+      <div>
+        <div class="stat-val">40+</div>
+        <div class="stat-label">Hours saved per<br>client monthly</div>
+      </div>
+      <div>
+        <div class="stat-val">100%</div>
+        <div class="stat-label">Woman-founded<br>&amp; operated</div>
       </div>
     </div>
   </div>
+
+  <!-- RIGHT — Animated agent cards -->
+  <div class="hero-right">
+    <div class="glow-ring-3"></div>
+
+    <div class="agent-card card-1">
+      <div class="ac-icon" style="background:rgba(76,173,138,0.12);">🤖</div>
+      <div>
+        <div class="ac-label">Customer Service Agent</div>
+        <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
+          Active · 24/7 <div class="ac-dot" style="background:#4cad8a;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-card card-2">
+      <div class="ac-icon" style="background:rgba(212,83,126,0.12);">⚡</div>
+      <div>
+        <div class="ac-label">Lead Generation Agent</div>
+        <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
+          Deployed <div class="ac-dot" style="background:#D4537E;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-card card-3">
+      <div class="ac-icon" style="background:rgba(232,168,74,0.12);">📄</div>
+      <div>
+        <div class="ac-label">Invoice Agent</div>
+        <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
+          Running <div class="ac-dot" style="background:#e8a84a;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-card card-4">
+      <div class="ac-icon" style="background:rgba(106,168,212,0.12);">📅</div>
+      <div>
+        <div class="ac-label">Scheduling Automation</div>
+        <div class="ac-value" style="display:flex;align-items:center;gap:6px;">
+          Running <div class="ac-dot" style="background:#6aa8d4;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
+
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot"></span>Workflow Automation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>AI Strategy</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>CRM Integration</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>AI Agent Builds</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Operations Automation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Training &amp; Enablement</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>South Florida</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Workflow Automation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>AI Strategy</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>CRM Integration</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>AI Agent Builds</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Operations Automation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Training &amp; Enablement</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>South Florida</div>
+  </div>
+</div>
 
 
 <!-- SERVICES -->
@@ -1051,7 +984,7 @@ footer {
         </svg>
       </div>
       <div class="service-num">02</div>
-      <div class="service-name">AI Strategy & Consulting</div>
+      <div class="service-name">AI Strategy &amp; Consulting</div>
       <div class="service-desc">Before building anything, we audit your processes, identify the highest-leverage automation opportunities, and create a roadmap that actually fits your business.</div>
       <div class="service-tags">
         <span class="service-tag">Process audit</span>
@@ -1088,7 +1021,7 @@ footer {
         </svg>
       </div>
       <div class="service-num">04</div>
-      <div class="service-name">CRM & Sales Automation</div>
+      <div class="service-name">CRM &amp; Sales Automation</div>
       <div class="service-desc">Connect your CRM, email, calendar, and communication tools into one seamless pipeline. Stop losing leads to manual follow-up delays.</div>
       <div class="service-tags">
         <span class="service-tag">HubSpot</span>
@@ -1122,7 +1055,7 @@ footer {
         </svg>
       </div>
       <div class="service-num">06</div>
-      <div class="service-name">Training & Enablement</div>
+      <div class="service-name">Training &amp; Enablement</div>
       <div class="service-desc">We don't just build and disappear. Your team gets documentation, recorded walkthroughs, and async support so you stay empowered long after launch.</div>
       <div class="service-tags">
         <span class="service-tag">SOPs</span>
@@ -1146,28 +1079,28 @@ footer {
       <div class="process-step">
         <div class="step-num">01</div>
         <div class="step-content">
-          <div class="step-title">Discovery & audit</div>
+          <div class="step-title">Discovery &amp; audit</div>
           <div class="step-desc">We map your current workflows, identify the manual bottlenecks costing you time and money, and size the automation opportunity before writing a single line of logic.</div>
         </div>
       </div>
       <div class="process-step">
         <div class="step-num">02</div>
         <div class="step-content">
-          <div class="step-title">Strategy & roadmap</div>
+          <div class="step-title">Strategy &amp; roadmap</div>
           <div class="step-desc">You get a prioritized automation roadmap with projected time savings, ROI estimates, and a sequenced build plan — so every decision is grounded in your actual business goals.</div>
         </div>
       </div>
       <div class="process-step">
         <div class="step-num">03</div>
         <div class="step-content">
-          <div class="step-title">Build & test</div>
+          <div class="step-title">Build &amp; test</div>
           <div class="step-desc">We build, test, and iterate until every workflow runs exactly as designed. You're looped in at every stage — no black boxes, no surprises at launch.</div>
         </div>
       </div>
       <div class="process-step">
         <div class="step-num">04</div>
         <div class="step-content">
-          <div class="step-title">Launch & optimize</div>
+          <div class="step-title">Launch &amp; optimize</div>
           <div class="step-desc">Go live with confidence. We monitor performance, tune automations based on real data, and document everything so your team is self-sufficient from day one.</div>
         </div>
       </div>
@@ -1313,7 +1246,7 @@ footer {
           <path d="M7 7V5a3 3 0 016 0v2" stroke="#D4537E" stroke-width="1" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="usecase-title">E-commerce & retail</div>
+      <div class="usecase-title">E-commerce &amp; retail</div>
       <div class="usecase-desc">Order management, customer support triage, inventory alerts, and abandoned cart flows — running 24/7 without lifting a finger.</div>
     </div>
     <div class="usecase-card reveal reveal-delay-2">
@@ -1323,7 +1256,7 @@ footer {
           <circle cx="10" cy="10" r="3" fill="#D4537E" opacity="0.8"/>
         </svg>
       </div>
-      <div class="usecase-title">Real estate & proptech</div>
+      <div class="usecase-title">Real estate &amp; proptech</div>
       <div class="usecase-desc">Lead routing, showing coordination, document workflows, and nurture sequences — all the repetitive touchpoints, automated with precision.</div>
     </div>
     <div class="usecase-card reveal reveal-delay-3">
@@ -1335,7 +1268,7 @@ footer {
           <circle cx="10" cy="8" r="2.5" fill="#D4537E"/>
         </svg>
       </div>
-      <div class="usecase-title">Coaches & consultants</div>
+      <div class="usecase-title">Coaches &amp; consultants</div>
       <div class="usecase-desc">Automated scheduling, client onboarding sequences, payment reminders, and content distribution — so you can focus on the work that only you can do.</div>
     </div>
     <div class="usecase-card reveal reveal-delay-3">
@@ -1347,7 +1280,7 @@ footer {
           <rect x="11" y="11" width="6" height="6" rx="1.5" fill="#D4537E" opacity="0.3"/>
         </svg>
       </div>
-      <div class="usecase-title">Health & wellness</div>
+      <div class="usecase-title">Health &amp; wellness</div>
       <div class="usecase-desc">Patient or client intake, appointment reminders, follow-up care sequences, and staff scheduling — HIPAA-aware and built for your tools.</div>
     </div>
   </div>
@@ -1365,7 +1298,7 @@ footer {
       <div class="founder-frame">
         <div class="founder-avatar-large">C</div>
         <div class="founder-name-display">Carolyne Mesa</div>
-        <div class="founder-title-display">Founder & Principal Consultant</div>
+        <div class="founder-title-display">Founder &amp; Principal Consultant</div>
         <div class="founder-badge-row">
           <span class="founder-badge">AI Strategy</span>
           <span class="founder-badge">Enterprise Architecture</span>
@@ -1392,7 +1325,7 @@ footer {
       <div class="founder-credentials">
         <div class="credential">
           <div class="credential-dot"></div>
-          <div class="credential-text"><strong>Former Gartner</strong> — enterprise research & advisory</div>
+          <div class="credential-text"><strong>Former Gartner</strong> — enterprise research &amp; advisory</div>
         </div>
         <div class="credential">
           <div class="credential-dot"></div>
@@ -1440,10 +1373,11 @@ footer {
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-logo-row">
-        <svg width="22" height="18" viewBox="0 0 22 18" fill="none">
-          <rect x="0" y="11" width="7" height="7" fill="#D4537E"/>
-          <rect x="7" y="6" width="7" height="12" fill="#D4537E" opacity="0.7"/>
-          <rect x="14" y="1" width="8" height="17" fill="#D4537E" opacity="0.4"/>
+        <svg width="24" height="24" viewBox="0 0 120 120" fill="none">
+          <line x1="18" y1="102" x2="96" y2="24" stroke="#D4537E" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+          <circle cx="18" cy="102" r="7"  fill="#72243E"/>
+          <circle cx="57" cy="63"  r="13" fill="#BF5878"/>
+          <circle cx="96" cy="24"  r="23" fill="#D4537E"/>
         </svg>
         <span class="footer-logo-type">Espira<span>.ai</span></span>
       </div>
@@ -1457,7 +1391,7 @@ footer {
         <a href="#">AI strategy</a>
         <a href="#">AI agent builds</a>
         <a href="#">CRM automation</a>
-        <a href="#">Training & enablement</a>
+        <a href="#">Training &amp; enablement</a>
       </div>
     </div>
 
